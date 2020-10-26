@@ -1,0 +1,14 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: CDI
+metadata:
+  name: cdi
+  labels:
+{{- include "cdi.labels" . | nindent 4 }}
+spec:
+  imagePullPolicy: {{ .Values.cdi.image.pullPolicy }}
+  infra:
+    nodeSelector:
+      kubernetes.io/os: linux
+  workload:
+    nodeSelector:
+      kubernetes.io/os: linux
