@@ -1,0 +1,93 @@
+# Default values for kubevirt-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+kubevirt:
+  namespace: kubevirt
+  version: v0.34.0
+  image:
+    # ImagePullPolicy; valid values are "IfNotPresent", "Never", and "Always"
+    pullPolicy: IfNotPresent
+
+api:
+  image:
+    name: virt-api
+    repository: index.docker.io/kubevirt/virt-api
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+    digest: sha256:b02ec9d1c1a6a18626490ab6ac8be34155d9da32718036866b341feff41e5633
+
+controller:
+  image:
+    name: virt-controller
+    repository: index.docker.io/kubevirt/virt-controller
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+    digest: sha256:852b81c8d72db1236d8cdc70263e7499819fad2470f3a6e154de08d256393ad3
+
+operator:
+  image:
+    name: virt-operator
+    repository: index.docker.io/kubevirt/virt-operator
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+    digest: sha256:fec75f1d53426826a6e7b3e78f89730970dc3f7cfac7f44de7079247e4891492
+
+handler:
+  image:
+    name: virt-handler
+    repository: index.docker.io/kubevirt/virt-handler
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+    digest: sha256:ec614bb569363ad646ddab232f4e6d9cc696711d271cafd56245a08f9d1c0f68
+
+launcher:
+  image:
+    name: virt-launcher
+    repository: index.docker.io/kubevirt/virt-launcher
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+    digest: sha256:15280b86aa3dbb5ab9648eb8fefc57fa4e6a0f5d521318478ad5c89edd31479b
+
+# api:
+#   image:
+#     name: virt-api
+#     repository: registry.suse.de/devel/virt/sle-15-sp2/containers/suse/sles/15.2/virt-api
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
+#     digest: sha256:50fa84257f4145ae82d9f323484508212ec2218547b19a1a69ec07241e1c1ba5
+
+# controller:
+#   image:
+#     name: virt-controller
+#     repository: registry.suse.de/devel/virt/sle-15-sp2/containers/suse/sles/15.2/virt-controller
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
+#     digest: sha256:8488a34262346971e29013c7dd8ec789351985e923b48cdd4ee4a9c210053d0f
+
+# operator:
+#   image:
+#     name: virt-operator
+#     repository: registry.suse.de/devel/virt/sle-15-sp2/containers/suse/sles/15.2/virt-operator
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
+#     digest: sha256:618ce70ba50dae1a5a5587a1cb759a1c598550795cd825841c732f81590d1410
+
+# handler:
+#   image:
+#     name: virt-handler
+#     repository: registry.suse.de/devel/virt/sle-15-sp2/containers/suse/sles/15.2/virt-handler
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
+#     digest: sha256:ad1e7f104becc3000275436ca81784997c87c76484510144f75cd3b9e513babd
+
+# launcher:
+#   image:
+#     name: virt-launcher
+#     repository: registry.suse.de/devel/virt/sle-15-sp2/containers/suse/sles/15.2/virt-launcher
+#     # Overrides the image tag whose default is the chart appVersion.
+#     tag: ""
+#     digest: sha256:f0e4c5d8267621ad83c752ff34d18b92d3b31615be37991e8091a87c213e8c92

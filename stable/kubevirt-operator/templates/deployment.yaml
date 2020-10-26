@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: virt-operator
+  labels:
+{{- include "kubevirt-operator.labels" . | nindent 4 }}
+    kubevirt.io: virt-operator
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+{{- include "kubevirt-operator.labels" . | nindent 6 }}
+      kubevirt.io: virt-operator
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ""
+      labels:
+{{- include "kubevirt-operator.labels" . | nindent 8 }}
+        kubevirt.io: virt-operator
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: kubevirt.io
+                  operator: In
+                  values:
+                  - virt-operator
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      containers:
+      - command:
+        - virt-operator
+        - --port
+        - "8443"
+        - -v
+        - "2"
+        env:
+        - name: OPERATOR_IMAGE
+          value: {{ .Values.operator.image.repository }}@{{ .Values.operator.image.digest }}
+        - name: WATCH_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['olm.targetNamespaces']
+        - name: KUBEVIRT_VERSION
+          value: {{ .Values.kubevirt.version }}
+        - name: VIRT_API_SHASUM
+          value: {{ .Values.api.image.digest }}
+        - name: VIRT_CONTROLLER_SHASUM
+          value: {{ .Values.controller.image.digest }}
+        - name: VIRT_HANDLER_SHASUM
+          value: {{ .Values.handler.image.digest }}
+        - name: VIRT_LAUNCHER_SHASUM
+          value: {{ .Values.launcher.image.digest }}
+        image: {{ .Values.operator.image.repository }}@{{ .Values.operator.image.digest }}
+        imagePullPolicy: {{ .Values.kubevirt.image.pullPolicy }}
+        name: virt-operator
+        ports:
+        - containerPort: 8443
+          name: metrics
+          protocol: TCP
+        - containerPort: 8444
+          name: webhooks
+          protocol: TCP
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 5
+          timeoutSeconds: 10
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/virt-operator/certificates
+          name: kubevirt-operator-certs
+          readOnly: true
+      priorityClassName: kubevirt-cluster-critical
+      securityContext:
+        runAsNonRoot: true
+      serviceAccountName: kubevirt-operator
+      tolerations:
+      - key: CriticalAddonsOnly
+        operator: Exists
+      volumes:
+      - name: kubevirt-operator-certs
+        secret:
+          optional: true
+          secretName: kubevirt-operator-certs
