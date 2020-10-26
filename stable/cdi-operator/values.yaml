@@ -1,0 +1,66 @@
+# Default values for cdi-operator.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+cdi:
+  namespace: cdi
+  version: v1.24.2
+  image:
+    # ImagePullPolicy; valid values are "IfNotPresent", "Never", and "Always"
+    pullPolicy: IfNotPresent
+
+controller:
+  image:
+    name: cdi-controller
+    repository: kubevirt/cdi-controller
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1.24.2
+    digest: ""
+
+importer:
+  image:
+    name: cdi-importer
+    repository: kubevirt/cdi-importer
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1.24.2
+    digest: ""
+
+cloner:
+  image:
+    name: cdi-cloner
+    repository: kubevirt/cdi-cloner
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1.24.2
+    digest: ""
+
+apiserver:
+  image:
+    name: cdi-apiserver
+    repository: kubevirt/cdi-apiserver
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1.24.2
+    digest: ""
+
+uploadserver:
+  image:
+    name: cdi-uploadserver
+    repository: kubevirt/cdi-uploadserver
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1.24.2
+    digest: ""
+
+uploadproxy:
+  image:
+    name: cdi-uploadproxy
+    repository: kubevirt/cdi-uploadproxy
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1.24.2
+    digest: ""
+
+operator:
+  image:
+    name: cdi-operator
+    repository: kubevirt/cdi-operator
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: v1.24.2
+    digest: ""
