@@ -1,0 +1,11 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: KubeVirt
+metadata:
+  name: kubevirt
+  labels:
+{{- include "kubevirt.labels" . | nindent 4 }}
+spec:
+  certificateRotateStrategy: {}
+  configuration: {}
+  customizeComponents: {}
+  imagePullPolicy: {{ .Values.kubevirt.image.pullPolicy }}
